@@ -1,0 +1,23 @@
+{
+    "name": "fipi-math",
+    "version": "1.0.0",
+    "description": "Website for preparing for the exam",
+    "main": "index.js",
+    "author": "Nikita",
+    "license": "MIT",
+    "scripts": {
+        "start:server:dev": "yarn --cwd ./server start:dev",
+        "start:server": "yarn --cwd ./server start",
+        "start:server:prod": "yarn --cwd ./server start:prod",
+        "start:client": "yarn --cwd ./client start",
+        "build:client": "yarn --cwd ./client build",
+        "build:server": "yarn --cwd ./server build",
+        "start:dev": "concurrently \"yarn start:server:dev\" \"yarn start:client\"",
+        "start": "concurrently \"yarn start:server\" \"yarn start:client\"",
+        "start:prod": "concurrently \"yarn start:server:prod\" \"yarn start:client\"",
+        "build": "concurrently \"yarn build:server\" \"yarn build:client\""
+    },
+    "dependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
