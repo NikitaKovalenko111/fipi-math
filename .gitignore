@@ -5,3 +5,4 @@
 /client/node_modules
 /client/dist
 /server/dist
+/server/tasks
