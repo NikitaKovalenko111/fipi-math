@@ -1,0 +1,57 @@
+.App {
+    text-align: center;
+    letter-spacing: 1px;
+    font-family: sans-serif;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-areas:
+        'header'
+        'content'
+        'footer';
+    grid-template-rows: 67px calc(100% - 67px - 67px) 67px;
+    min-height: 100vh;
+}
+
+.ant-checkbox-inner {
+    transform: scale(1.3);
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1280px;
+    width: 100%;
+}
+
+.mq-editable-field {
+    font-size: 20px !important;
+}
+
+.katex-html {
+    display: none;
+}
+
+@media screen and (max-width: 1280px) {
+    .container {
+        max-width: 1000px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .container {
+        max-width: 800px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        max-width: 600px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        max-width: 400px;
+    }
+}

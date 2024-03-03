@@ -1,0 +1,21 @@
+{
+    "extends": ["react-app", "react-app/jest"],
+    "rules": {
+        "quotes": ["error", "single"],
+        "jsx-quotes": ["error", "prefer-double"],
+        "prefer-const": "warn",
+        "semi": ["warn", "never"],
+        "react-hooks/exhaustive-deps": "off",
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "interface",
+                "format": ["PascalCase"],
+                "custom": {
+                    "regex": "^I[A-Z]",
+                    "match": true
+                }
+            }
+        ]
+    }
+}
