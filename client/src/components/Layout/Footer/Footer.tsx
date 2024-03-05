@@ -27,7 +27,7 @@ const FooterComponent: React.FC<PropsType> = (): JSX.Element => {
                     <a
                         style={{ color: 'white' }}
                         target="__blank"
-                        href="https://github.com/NikitaKovalenko111/fipi-tasks-math"
+                        href="https://github.com/NikitaKovalenko111/fipi-math"
                     >
                         Github
                     </a>
