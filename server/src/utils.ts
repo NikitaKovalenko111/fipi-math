@@ -14,5 +14,6 @@ export const genRefTokenObj = (maxAge: number): CookieOptions => {
         maxAge: maxAge,
         httpOnly: true,
         sameSite: 'lax',
+        secure: false,
     }
 }
