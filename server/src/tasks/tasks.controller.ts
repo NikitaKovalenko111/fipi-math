@@ -21,18 +21,19 @@ import { Query as QueryType } from 'express-serve-static-core'
 import { Request } from 'express'
 import { tokenPayloadType } from 'src/auth/dto/auth.dto'
 import TokenService from 'src/auth/token.service'
+import { join } from 'path'
 
 @Controller('tasks')
 export class TasksController {
     constructor(
         private tasksService: TasksService,
-        private tokenService: TokenService,
+        private tokenService: TokenService
     ) {}
 
     @Get()
     async getTasks(
         @Query() query: QueryType,
-        @Req() req: Request,
+        @Req() req: Request
     ): Promise<IResponseGetTasks> {
         const accessToken: string = req.headers.authorization
             ? req.headers.authorization.split(' ')[1]
@@ -66,21 +67,21 @@ export class TasksController {
     @UseInterceptors(
         FileInterceptor('taskImage', {
             storage: diskStorage({
-                destination: './tasks',
+                destination: join(__dirname, '../../tasks/'),
                 filename: (req, file, callback) => {
                     const fileName: string = uniqid(
                         `${req.body.taskNumber}_`,
-                        '.png',
+                        '.png'
                     )
 
                     callback(null, fileName)
                 },
             }),
-        }),
+        })
     )
     postTask(
         @Body() postTaskDto: postTaskDtoType,
-        @UploadedFile() taskImage: Express.Multer.File,
+        @UploadedFile() taskImage: Express.Multer.File
     ): Promise<Task> {
         return this.tasksService.postTaskService(postTaskDto, taskImage)
     }
