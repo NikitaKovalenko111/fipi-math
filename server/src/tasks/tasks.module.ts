@@ -17,7 +17,7 @@ import { join } from 'path'
             { name: Token.name, schema: TokenSchema },
             { name: User.name, schema: UserSchema },
         ]),
-        MulterModule.register({ dest: join(__dirname, '..', 'tasks') }),
+        MulterModule.register({ dest: join(__dirname, '../../tasks/') }),
     ],
     providers: [TasksService, TokenService],
     controllers: [TasksController],
