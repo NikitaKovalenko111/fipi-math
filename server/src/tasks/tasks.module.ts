@@ -8,6 +8,7 @@ import { MulterModule } from '@nestjs/platform-express'
 import TokenService from 'src/auth/token.service'
 import { Token, TokenSchema } from 'src/schemas/token.schema'
 import { User, UserSchema } from 'src/schemas/auth.schema'
+import { join } from 'path'
 
 @Module({
     imports: [
@@ -16,7 +17,7 @@ import { User, UserSchema } from 'src/schemas/auth.schema'
             { name: Token.name, schema: TokenSchema },
             { name: User.name, schema: UserSchema },
         ]),
-        MulterModule.register({ dest: './../../tasks/' }),
+        MulterModule.register({ dest: join(__dirname, '..', 'tasks') }),
     ],
     providers: [TasksService, TokenService],
     controllers: [TasksController],
