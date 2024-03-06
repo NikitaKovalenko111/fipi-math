@@ -16,7 +16,7 @@ import { User, UserSchema } from 'src/schemas/auth.schema'
             { name: Token.name, schema: TokenSchema },
             { name: User.name, schema: UserSchema },
         ]),
-        MulterModule.register({ dest: './tasks' }),
+        MulterModule.register({ dest: './../../tasks/' }),
     ],
     providers: [TasksService, TokenService],
     controllers: [TasksController],
