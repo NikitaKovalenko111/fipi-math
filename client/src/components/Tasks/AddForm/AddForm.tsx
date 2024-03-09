@@ -9,11 +9,14 @@ import {
 import { InboxOutlined } from '@ant-design/icons'
 import styles from './../../../sass/AddForm.module.sass'
 import cn from 'classnames'
-import MathInput from 'react-math-keyboard'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../../redux/redux-store'
 import { addTaskApiAC } from '../../../redux/actions/tasksActions/tasksActions'
 import { setLoadingType } from '../../../types'
+import 'katex/dist/katex.css'
+import MDEditor from '@uiw/react-md-editor'
+import rehypeKatex from 'rehype-katex'
+import remarkMath from 'remark-math'
 
 type PropsType = {
     changeIsAddFormVisible: (value: boolean) => void
@@ -137,13 +140,36 @@ const AddForm: React.FC<PropsType> = ({
                 label="Ответ:"
                 labelCol={{ span: 24 }}
             >
-                <MathInput
+                <MDEditor
+                    value={formik.values.answer}
+                    onChange={(newValue) =>
+                        formik.setFieldValue('answer', newValue!)
+                    }
+                    textareaProps={{
+                        placeholder:
+                            'Напишите решение с ответом или только ответ...',
+                    }}
+                    previewOptions={{
+                        remarkPlugins: [[remarkMath]],
+                        rehypePlugins: [
+                            [
+                                //@ts-ignore
+                                rehypeKatex,
+                                {
+                                    displayMode: false,
+                                    output: 'mathml',
+                                },
+                            ],
+                        ],
+                    }}
+                />
+                {/*<MathInput
                     style={{ height: 'auto', width: '100%' }}
                     setValue={(value: string) => {
                         formik.setFieldValue('answer', value)
                     }}
                     value={formik.values.answer}
-                />
+                /> */}
             </Form.Item>
             <Form.Item
                 labelCol={{ span: 24 }}

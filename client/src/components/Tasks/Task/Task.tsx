@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import styles from './../../../sass/Task.module.sass'
-import { Collapse, Image, Rate, Select } from 'antd'
+import { Image, Rate, Select } from 'antd'
 import { NavLink } from 'react-router-dom'
 import { Input } from 'antd'
 import { IUser, setLoadingType } from '../../../types'
@@ -10,10 +10,13 @@ import {
     isAuthorizedSelector,
 } from '../../../selectors/usersSelectors'
 import TaskSolveButtons from '../TaskSolveButtons/TaskSolveButtons'
-import { BlockMath } from 'react-katex'
 import { withLoader } from '../../../hoc/withLoader'
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import preview from './../../../images/push-to-see-preview.jpg'
+import MDEditor from '@uiw/react-md-editor'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import { DownOutlined } from '@ant-design/icons'
 
 type PropsType = {
     taskImageSrc: string
@@ -60,6 +63,8 @@ const Task: React.FC<PropsType> = ({
 
     const { innerWidth } = window
 
+    const [isAnswerDisplayed, displayAnswer] = useState(false)
+
     return (
         <div className={cn(styles.taskWrapper)}>
             <div className={cn(styles.mobileBlock)}>
@@ -103,16 +108,41 @@ const Task: React.FC<PropsType> = ({
             />
             {((answer && !isVariant) ||
                 (answer && isVariant && partOfCheck === 2)) && (
-                <Collapse
-                    size="small"
-                    items={[
-                        {
-                            key: 'answer',
-                            label: 'ОТВЕТ',
-                            children: <BlockMath math={answer} />,
-                        },
-                    ]}
-                />
+                <div className={cn(styles.answerWrapper)}>
+                    <span
+                        className={cn(styles.showAnswerButton)}
+                        onClick={() => {
+                            displayAnswer((prev) => !prev)
+                        }}
+                    >
+                        Показать ответ
+                        <DownOutlined
+                            rotate={isAnswerDisplayed ? 180 : 0}
+                        />{' '}
+                    </span>
+                    {isAnswerDisplayed && (
+                        <div
+                            className={cn(styles.markdown)}
+                            data-color-mode="light"
+                        >
+                            <MDEditor.Markdown
+                                style={{ textAlign: 'left', padding: '10px' }}
+                                remarkPlugins={[[remarkMath]]}
+                                source={answer}
+                                rehypePlugins={[
+                                    [
+                                        //@ts-ignore
+                                        rehypeKatex,
+                                        {
+                                            displayMode: false,
+                                            output: 'mathml',
+                                        },
+                                    ],
+                                ]}
+                            />
+                        </div>
+                    )}
+                </div>
             )}
             {partOfCheck === 1 &&
                 !isTimeUp &&
