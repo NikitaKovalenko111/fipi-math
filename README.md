@@ -1,6 +1,6 @@
 # FIPI MATH
 
-It is my **hand-written** project. I was making it for 5 months 2-3 days in a week. This project is a **platform for preparing for the russian math exam**.
+It is my **hand-written** fullstack project. I was making it for 5 months 2-3 days in a week. This project is a **platform for preparing for the russian math exam**.
 
 The project runs on the [link](https://devapplication.ru). But usually it doesn't work because I turn off the server!
 
