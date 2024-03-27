@@ -144,6 +144,7 @@ const VariantPage: React.FC<PropsType> = ({
         }
         if (variantToken) {
             localStorage.setItem('currentVariant', variantToken)
+            setIsLoading(false)
         }
         if (variantCheckResults) {
             setPart(5)
