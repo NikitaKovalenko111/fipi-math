@@ -7,13 +7,16 @@ import {
     getTasksAC,
     getTasksApiAC,
     getTaskByIdAC,
+    rateTaskAC,
 } from '../actions/tasksActions/tasksActions'
 import { paginatorSelector } from '../../selectors/tasksSelectors'
 import {
     IAddTaskApiAC,
     IGetTaskByIdApiAC,
     IGetTasksApiAC,
+    IRateTaskApiAC,
 } from '../actions/tasksActions/actionsInterfaces'
+import { SaveRatedTaskAC } from '../actions/usersActions/usersActions'
 
 export function* addTaskSagaWatcher() {
     yield takeLatest(ActionTypesList.ADD_TASK_API, addTaskSagaWorker)
@@ -74,6 +77,28 @@ function* getTaskByIdSagaWorker(action: IGetTaskByIdApiAC) {
         yield put(getTaskByIdAC(data))
 
         setIsLoading(false)
+    } catch (error) {
+        console.log(error)
+
+        setIsLoading(false)
+    }
+}
+
+export function* rateTaskSagaWatcher() {
+    yield takeLatest(ActionTypesList.RATE_TASK_API, rateTaskSagaWorker)
+}
+
+function* rateTaskSagaWorker(action: IRateTaskApiAC) {
+    const { difficulty, taskId } = action.payload
+    const { setIsLoading } = action
+
+    try {
+        setIsLoading(true)
+
+        const task: ITask = yield call(tasksAPI.rateTask, taskId, difficulty)
+
+        yield put(rateTaskAC(task))
+        yield put(SaveRatedTaskAC(taskId))
     } catch (error) {
         console.log(error)
 

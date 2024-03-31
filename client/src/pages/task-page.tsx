@@ -42,6 +42,7 @@ const TaskPage: React.FC<PropsType> = ({
     return (
         <div className={cn(styles.wrapper)}>
             <Task
+                difficultyMarks={task.difficultyMarks}
                 isVariant={false}
                 id={id as string}
                 difficulty={task.difficulty}

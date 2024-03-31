@@ -76,6 +76,7 @@ const TasksPage: React.FC<PropsType> = ({
                             tasks.map((el) => {
                                 return (
                                     <Task
+                                        difficultyMarks={el.difficultyMarks}
                                         isVariant={false}
                                         key={el._id}
                                         id={el._id}

@@ -22,6 +22,8 @@ import { Request } from 'express'
 import { tokenPayloadType } from 'src/auth/dto/auth.dto'
 import TokenService from 'src/auth/token.service'
 import { join } from 'path'
+import { setTaskDifficultyDto } from './dto/setTaskDifficulty.dto'
+import { taskDto } from './dto/task.dto'
 
 @Controller('tasks')
 export class TasksController {
@@ -89,5 +91,20 @@ export class TasksController {
     @Delete('/:id')
     deleteTask(@Param('id') id: Types.ObjectId): Promise<Task> {
         return this.tasksService.deleteTaskService(id)
+    }
+
+    @Post('/set/difficulty')
+    async setTaskDifficulty(
+        @Body() setTaskDifficulty: setTaskDifficultyDto
+    ): Promise<taskDto> {
+        const { user, difficulty, taskId } = setTaskDifficulty
+
+        const task: taskDto = await this.tasksService.setDifficultyTaskService(
+            user.id,
+            difficulty,
+            taskId
+        )
+
+        return task
     }
 }

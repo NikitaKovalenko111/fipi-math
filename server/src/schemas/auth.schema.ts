@@ -33,6 +33,9 @@ export class User {
 
     @Prop()
     solvedTasks: Array<Types.ObjectId>
+
+    @Prop()
+    ratedTasks: Array<Types.ObjectId>
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

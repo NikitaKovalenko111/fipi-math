@@ -56,3 +56,18 @@ export interface IGetTaskByIdAC extends AnyAction {
         task: ITask
     }
 }
+
+export interface IRateTaskApiAC extends IActionWithLoader {
+    type: typeof ActionTypesList.RATE_TASK_API
+    payload: {
+        taskId: string
+        difficulty: number
+    }
+}
+
+export interface IRateTaskAC extends AnyAction {
+    type: typeof ActionTypesList.RATE_TASK
+    payload: {
+        task: ITask
+    }
+}

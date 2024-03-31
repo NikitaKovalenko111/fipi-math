@@ -15,6 +15,10 @@ interface ITasksAPI {
     ) => Promise<AxiosResponse<IResponseGetTasks>>
     postTask: (formData: FormData) => Promise<AxiosResponse<FormData>>
     getTaskById: (id: string) => Promise<AxiosResponse<ITask>>
+    rateTask: (
+        taskId: string,
+        difficulty: number
+    ) => Promise<AxiosResponse<ITask>>
 }
 
 const axiosInstance = axios.create({
@@ -44,11 +48,19 @@ const tasksAPI: ITasksAPI = {
         return axiosInstance.get(`/${id}`).then((data) => data.data)
     },
     postTask(formData) {
-        return axiosInstance.post('/', formData, {
+        return instanceWithAuth.post('/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         })
+    },
+    rateTask(taskId, difficulty) {
+        return instanceWithAuth
+            .post('/set/difficulty', {
+                taskId,
+                difficulty,
+            })
+            .then((data) => data.data)
     },
 }
 

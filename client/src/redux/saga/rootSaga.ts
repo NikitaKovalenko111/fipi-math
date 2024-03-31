@@ -3,6 +3,7 @@ import {
     addTaskSagaWatcher,
     getTaskByIdSagaWatcher,
     getTasksSagaWatcher,
+    rateTaskSagaWatcher,
 } from './tasksSagas'
 import {
     authorizationSagaWatcher,
@@ -38,5 +39,6 @@ export default function* rootSaga() {
         fork(generateVariantWithTokenSagaWatcher),
         fork(solveTaskSagaWatcher),
         fork(unsolveTaskSagaWatcher),
+        fork(rateTaskSagaWatcher),
     ])
 }

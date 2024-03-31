@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import styles from './../../../sass/Task.module.sass'
-import { Image, Rate, Select } from 'antd'
+import { Image, Select } from 'antd'
 import { NavLink } from 'react-router-dom'
 import { Input } from 'antd'
 import { IUser, setLoadingType } from '../../../types'
@@ -17,6 +17,7 @@ import MDEditor from '@uiw/react-md-editor'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import { DownOutlined } from '@ant-design/icons'
+import TaskRate from '../TaskRate/TaskRate'
 
 type PropsType = {
     taskImageSrc: string
@@ -29,6 +30,7 @@ type PropsType = {
     valueChanger?: (taskNumber: number, value: number | '') => void
     value?: number | ''
     isAnswerCorrect?: 'correct' | 'incorrect' | number
+    difficultyMarks: Array<number>
     isTimeUp?: boolean
     setIsLoading?: setLoadingType
 }
@@ -53,6 +55,7 @@ const Task: React.FC<PropsType> = ({
     value,
     valueChanger,
     partOfCheck,
+    difficultyMarks,
     isAnswerCorrect,
     isTimeUp,
 }): JSX.Element => {
@@ -60,6 +63,7 @@ const Task: React.FC<PropsType> = ({
     const isAuthorized: boolean = useSelector(isAuthorizedSelector)
 
     const TaskSolveButtonsWithLoader = withLoader(TaskSolveButtons, false)
+    const TaskRateWithLoader = withLoader(TaskRate, false)
 
     const { innerWidth } = window
 
@@ -94,7 +98,13 @@ const Task: React.FC<PropsType> = ({
                 {(!isVariant ||
                     (isVariant &&
                         (partOfCheck === 5 || partOfCheck === 4))) && (
-                    <Rate value={difficulty} disabled />
+                    <TaskRateWithLoader
+                        difficultyMarks={difficultyMarks}
+                        isAuthorized={isAuthorized}
+                        difficulty={difficulty}
+                        id={id}
+                        ratedTasks={user.ratedTasks}
+                    />
                 )}
             </div>
             <Image

@@ -8,6 +8,8 @@ import {
     IGetTaskByIdApiAC,
     IGetTasksAC,
     IGetTasksApiAC,
+    IRateTaskAC,
+    IRateTaskApiAC,
 } from './actionsInterfaces'
 
 export const getTasksApiAC = (
@@ -82,6 +84,26 @@ export const getTaskByIdApiAC = (
 
 export const getTaskByIdAC = (task: ITask): IGetTaskByIdAC => ({
     type: ActionTypesList.GET_TASK_BY_ID,
+    payload: {
+        task: task,
+    },
+})
+
+export const rateTaskApiAC = (
+    taskId: string,
+    difficulty: number,
+    setIsLoading: setLoadingType
+): IRateTaskApiAC => ({
+    type: ActionTypesList.RATE_TASK_API,
+    setIsLoading: setIsLoading,
+    payload: {
+        taskId,
+        difficulty,
+    },
+})
+
+export const rateTaskAC = (task: ITask): IRateTaskAC => ({
+    type: ActionTypesList.RATE_TASK,
     payload: {
         task: task,
     },

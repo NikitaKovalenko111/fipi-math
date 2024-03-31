@@ -16,6 +16,7 @@ import {
     ILogoutAC,
     IRegisterAC,
     IRemoveUserDataAC,
+    ISaveRatedTaskAC,
     ISolveTaskAC,
     ISolveTaskApiAC,
     IUnsolveTaskAC,
@@ -98,6 +99,7 @@ export const AuthorizationAC = (user: IUser): IAuthorizationAC => ({
         roles: user.roles,
         solvedVariants: user.solvedVariants,
         solvedTasks: user.solvedTasks,
+        ratedTasks: user.ratedTasks,
     },
 })
 
@@ -125,4 +127,11 @@ export const RegisterAC = (
 
 export const LogoutAC = (): ILogoutAC => ({
     type: UsersActionTypes.LOGOUT,
+})
+
+export const SaveRatedTaskAC = (taskId: string): ISaveRatedTaskAC => ({
+    type: UsersActionTypes.RATE_TASK,
+    payload: {
+        taskId,
+    },
 })

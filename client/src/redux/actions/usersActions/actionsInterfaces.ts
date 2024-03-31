@@ -85,3 +85,10 @@ export interface IUnsolveTaskAC extends AnyAction {
         taskId: string
     }
 }
+
+export interface ISaveRatedTaskAC extends AnyAction {
+    type: typeof UsersActionTypes.RATE_TASK
+    payload: {
+        taskId: string
+    }
+}

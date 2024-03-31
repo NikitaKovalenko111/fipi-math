@@ -38,6 +38,7 @@ export class AppModule implements NestModule {
                 '/auth/logout',
                 '/profile/save/task',
                 '/profile/save/variant',
+                '/tasks/set/difficulty'
             )
     }
 }

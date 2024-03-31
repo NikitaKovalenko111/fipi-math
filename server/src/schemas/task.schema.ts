@@ -1,5 +1,5 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { HydratedDocument } from 'mongoose'
+import { HydratedDocument, Types } from 'mongoose'
 
 export type TaskDocument = HydratedDocument<Task>
 
@@ -16,6 +16,9 @@ export class Task {
 
     @Prop()
     fileName: string
+
+    @Prop()
+    difficultyMarks: Array<number>
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task)

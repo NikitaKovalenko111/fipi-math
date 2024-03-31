@@ -7,6 +7,8 @@ import {
     IGetTaskByIdApiAC,
     IGetTasksAC,
     IGetTasksApiAC,
+    IRateTaskAC,
+    IRateTaskApiAC,
 } from './redux/actions/tasksActions/actionsInterfaces'
 import {
     IAuthorizationAC,
@@ -17,6 +19,7 @@ import {
     ILogoutAC,
     IRegisterAC,
     IRemoveUserDataAC,
+    ISaveRatedTaskAC,
     ISolveTaskAC,
     ISolveTaskApiAC,
     IUnsolveTaskAC,
@@ -43,8 +46,14 @@ export interface ITask {
     _id: string
     taskNumber: number
     difficulty: number
+    difficultyMarks: Array<number>
     fileName: string
     answer: string
+}
+
+export interface IDifficultyMark {
+    userId: string
+    difficulty: number
 }
 
 export type TasksActionCreatorsTypes =
@@ -55,6 +64,8 @@ export type TasksActionCreatorsTypes =
     | IGetTaskByIdAC
     | IGetTaskByIdApiAC
     | IAddTaskApiAC
+    | IRateTaskAC
+    | IRateTaskApiAC
 
 export type UserActionCreatorsTypes =
     | IAuthorizationApiAC
@@ -69,6 +80,7 @@ export type UserActionCreatorsTypes =
     | ISolveTaskApiAC
     | IUnsolveTaskApiAC
     | IUnsolveTaskAC
+    | ISaveRatedTaskAC
 
 export type VariantActionCreatorTypes =
     | IGenerateVariantAC
@@ -124,6 +136,7 @@ export interface IUser {
     roles: Array<string>
     solvedTasks: Array<string>
     solvedVariants: Array<IVariantInfo>
+    ratedTasks: Array<string>
 }
 
 export interface ITokens {

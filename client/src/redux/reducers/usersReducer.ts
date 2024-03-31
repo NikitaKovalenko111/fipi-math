@@ -15,6 +15,7 @@ const initialState: IUsersInitialState = {
         roles: [],
         solvedTasks: [],
         solvedVariants: [],
+        ratedTasks: [],
     },
     isAuthorized: false,
     users: [],
@@ -33,6 +34,7 @@ export enum UsersActionTypes {
     SOLVE_TASK = 'users/SOLVE_TASK',
     UNSOLVE_TASK_API = 'users/UNSOLVE_TASK_API',
     UNSOLVE_TASK = 'users/UNSOLVE_TASK',
+    RATE_TASK = 'users/RATE_TASK',
 }
 
 const usersReducer: Reducer<IUsersInitialState, UserActionCreatorsTypes> = (
@@ -74,6 +76,7 @@ const usersReducer: Reducer<IUsersInitialState, UserActionCreatorsTypes> = (
                     roles: state.currentUser.roles,
                     solvedTasks: state.currentUser.solvedTasks,
                     solvedVariants: state.currentUser.solvedVariants,
+                    ratedTasks: state.currentUser.ratedTasks,
                 },
             }
         }
@@ -92,6 +95,21 @@ const usersReducer: Reducer<IUsersInitialState, UserActionCreatorsTypes> = (
                             state.currentUser.solvedTasks.length
                         ),
                         action.payload.taskId,
+                    ],
+                },
+            }
+        }
+
+        case UsersActionTypes.RATE_TASK: {
+            const { taskId } = action.payload
+
+            return {
+                ...state,
+                currentUser: {
+                    ...state.currentUser,
+                    ratedTasks: [
+                        ...state.currentUser.ratedTasks.slice(0),
+                        taskId,
                     ],
                 },
             }

@@ -35,6 +35,7 @@ const initialState: ITasksInitialState = {
         taskNumber: 0,
         difficulty: 0,
         fileName: '',
+        difficultyMarks: [],
     },
 }
 
@@ -46,6 +47,8 @@ export enum ActionTypesList {
     CHANGE_FILTER_VALUE = 'tasks/CHANGE_FILTER_VALUE',
     GET_TASK_BY_ID_API = 'tasks/GET_TASK_BY_ID_API',
     GET_TASK_BY_ID = 'tasks/GET_TASK_BY_ID',
+    RATE_TASK_API = 'tasks/RATE_TASK_API',
+    RATE_TASK = 'tasks/RATE_TASK',
 }
 
 const tasksReducer: Reducer<ITasksInitialState, TasksActionCreatorsTypes> = (
@@ -71,6 +74,22 @@ const tasksReducer: Reducer<ITasksInitialState, TasksActionCreatorsTypes> = (
 
         case ActionTypesList.GET_TASK_BY_ID: {
             return { ...state, currentTask: action.payload.task }
+        }
+
+        case ActionTypesList.RATE_TASK: {
+            const { _id } = action.payload.task
+            const { task } = action.payload
+
+            const index: number = state.tasks.findIndex((el) => el._id === _id)
+
+            return {
+                ...state,
+                tasks: [
+                    ...state.tasks.slice(0, index),
+                    task,
+                    ...state.tasks.slice(index + 1),
+                ],
+            }
         }
 
         default:

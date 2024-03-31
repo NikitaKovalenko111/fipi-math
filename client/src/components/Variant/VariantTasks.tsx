@@ -35,6 +35,7 @@ const VariantTasks: React.FC<PropsType> = ({
                 variant.map((el, index) => {
                     return (
                         <Task
+                            difficultyMarks={el.difficultyMarks}
                             key={el._id}
                             isVariant={true}
                             taskNumber={el.taskNumber}
@@ -64,6 +65,7 @@ const VariantTasks: React.FC<PropsType> = ({
                     if (el.taskNumber >= 13) {
                         return (
                             <Task
+                                difficultyMarks={el.difficultyMarks}
                                 key={el._id}
                                 isVariant={true}
                                 taskNumber={el.taskNumber}

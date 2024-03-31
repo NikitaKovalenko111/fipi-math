@@ -2,7 +2,6 @@
     "name": "fipi-math",
     "version": "1.0.0",
     "description": "Website for preparing for the exam",
-    "main": "index.js",
     "author": "Nikita",
     "license": "MIT",
     "scripts": {

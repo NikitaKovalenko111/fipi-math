@@ -31,6 +31,7 @@ export class userReturnDto {
     roles
     solvedVariants
     solvedTasks
+    ratedTasks
 
     constructor(user: userDtoType) {
         ;(this.username = user.username),
@@ -38,7 +39,8 @@ export class userReturnDto {
             (this.id = user._id),
             (this.roles = user.roles),
             (this.solvedVariants = user.solvedVariants),
-            (this.solvedTasks = user.solvedTasks)
+            (this.solvedTasks = user.solvedTasks),
+            (this.ratedTasks = user.ratedTasks)
     }
 }
 
@@ -50,4 +52,5 @@ export class userDtoType {
     roles: Array<string>
     solvedVariants: Array<solvedVariantDto>
     solvedTasks: Array<Types.ObjectId>
+    ratedTasks: Array<Types.ObjectId>
 }

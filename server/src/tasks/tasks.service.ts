@@ -5,6 +5,8 @@ import { Model, Types } from 'mongoose'
 import { Task } from '../schemas/task.schema'
 import { Query as QueryType } from 'express-serve-static-core'
 import { User } from 'src/schemas/auth.schema'
+import { ServiceError } from 'src/utils'
+import { taskDto } from './dto/task.dto'
 
 export interface IResponseGetTasks {
     tasks: Task[]
@@ -15,13 +17,13 @@ export interface IResponseGetTasks {
 export class TasksService {
     constructor(
         @InjectModel(Task.name) private taskModel: Model<Task>,
-        @InjectModel(User.name) private userModel: Model<User>,
+        @InjectModel(User.name) private userModel: Model<User>
     ) {}
 
     async getTasksService(
         query: QueryType,
         isAuth: boolean,
-        userId: Types.ObjectId | null,
+        userId: Types.ObjectId | null
     ): Promise<IResponseGetTasks> {
         let userInDb
         let solvedTasks
@@ -46,7 +48,7 @@ export class TasksService {
         )
             throw new HttpException(
                 'difficultySort can be only 1 or -1',
-                HttpStatus.BAD_REQUEST,
+                HttpStatus.BAD_REQUEST
             )
 
         const findQueries = {}
@@ -100,12 +102,13 @@ export class TasksService {
 
     postTaskService(
         postTaskDto: postTaskDtoType,
-        taskImage: Express.Multer.File,
+        taskImage: Express.Multer.File
     ): Promise<Task> {
         const postTaskObject: Task = {
             taskNumber: Number(postTaskDto.taskNumber),
             answer: postTaskDto.answer,
-            difficulty: Number(postTaskDto.difficulty),
+            difficulty: 0,
+            difficultyMarks: [],
             fileName: taskImage.filename,
         }
 
@@ -114,5 +117,48 @@ export class TasksService {
 
     deleteTaskService(id: Types.ObjectId): Promise<Task> {
         return this.taskModel.findByIdAndDelete(id)
+    }
+
+    async setDifficultyTaskService(
+        userId: Types.ObjectId,
+        difficulty: number,
+        taskId: Types.ObjectId
+    ): Promise<taskDto> {
+        const task = await this.taskModel.findById(taskId)
+        const user = await this.userModel.findById(userId)
+
+        if (!user) {
+            throw new ServiceError(
+                'Пользователь не авторизован',
+                HttpStatus.UNAUTHORIZED
+            )
+        }
+
+        if (!task) {
+            throw new ServiceError('Задание не найдено', HttpStatus.NOT_FOUND)
+        }
+
+        user.ratedTasks.push(taskId)
+
+        await user.save()
+
+        task.difficultyMarks.push(difficulty)
+
+        let averageDifficulty: number = 0
+        let sum: number = 0
+
+        if (task.difficultyMarks.length > 0) {
+            task.difficultyMarks.forEach((el) => {
+                sum += el
+            })
+
+            averageDifficulty = sum / task.difficultyMarks.length
+        }
+
+        task.difficulty = averageDifficulty
+
+        await task.save()
+
+        return task
     }
 }
