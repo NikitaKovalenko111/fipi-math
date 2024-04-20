@@ -152,7 +152,7 @@ export class TasksService {
                 sum += el
             })
 
-            averageDifficulty = sum / task.difficultyMarks.length
+            averageDifficulty = Math.floor(sum / task.difficultyMarks.length)
         }
 
         task.difficulty = averageDifficulty

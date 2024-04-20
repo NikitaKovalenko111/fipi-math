@@ -68,7 +68,7 @@ const GeneratorPage: React.FC<PropsType> = ({
             >
                 Сгенерировать вариант
             </Button>
-            {isLoading && (
+            {true && (
                 <SpinLoader style={{ position: 'absolute', bottom: '35%' }} />
             )}
         </div>
